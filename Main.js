@@ -55,6 +55,9 @@ function Main() {
       setLastBooking(formData);
       setBookingHistory((prev) => [formData, ...prev]);
       dispatch({ type: "BOOK_SLOT", time: formData.time });
+      if (typeof window !== "undefined" && !/jsdom/i.test(window.navigator?.userAgent || "")) {
+        window.scrollTo(0, 0);
+      }
       navigate("/confirmed");
     }
     return succeeded;

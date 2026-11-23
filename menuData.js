@@ -3,19 +3,29 @@
  * Inline SVG data URIs guarantee crisp visuals with zero broken third-party image requests.
  */
 
-const makeDishArt = (bg, accent, label, subtitle) =>
-  `data:image/svg+xml;utf8,${encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img" aria-label="${label}">
+const escXml = (s) =>
+  String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+const makeDishArt = (bg, accent, label, subtitle) => {
+  const safeLabel = escXml(label);
+  const safeSubtitle = escXml(subtitle);
+  return `data:image/svg+xml;utf8,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img" aria-label="${safeLabel}">
       <rect width="600" height="400" fill="${bg}"/>
       <circle cx="300" cy="175" r="108" fill="#FFFFFF" opacity="0.16"/>
       <circle cx="300" cy="175" r="82" fill="${accent}"/>
       <circle cx="275" cy="158" r="18" fill="#495E57" opacity="0.75"/>
       <circle cx="328" cy="186" r="22" fill="#F4CE14" opacity="0.9"/>
       <circle cx="294" cy="204" r="14" fill="#EDEFEE" opacity="0.9"/>
-      <text x="300" y="325" text-anchor="middle" fill="#FFFFFF" font-family="Georgia, serif" font-size="30" font-weight="700">${label}</text>
-      <text x="300" y="358" text-anchor="middle" fill="#EDEFEE" font-family="Arial, sans-serif" font-size="16">${subtitle}</text>
+      <text x="300" y="325" text-anchor="middle" fill="#FFFFFF" font-family="Georgia, serif" font-size="30" font-weight="700">${safeLabel}</text>
+      <text x="300" y="358" text-anchor="middle" fill="#EDEFEE" font-family="Arial, sans-serif" font-size="16">${safeSubtitle}</text>
     </svg>`
   )}`;
+};
 
 export const WEEKLY_SPECIALS = [
   {

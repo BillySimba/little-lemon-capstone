@@ -49,7 +49,7 @@ function CallToAction() {
               textAnchor="middle"
               fill="#EDEFEE"
               fontFamily="Georgia, serif"
-              fontSize="24"
+              fontSize="18"
               fontWeight="600"
             >
               Fresh Mediterranean Kitchen · Est. Chicago
